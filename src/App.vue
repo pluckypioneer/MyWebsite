@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <!-- 头部导航栏，添加ref用于获取元素 -->
-    <TheHeader ref="headerRef" />
-
-    <!-- 路由视图，动态调整padding-top -->
+    <TheHeader />
     <main class="app-main-content" :style="{ paddingTop: headerHeight + 'px' }">
+      <!-- 页面过渡动画 -->
       <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
+        <transition name="fade">
+          <Component :key="$route.path" />
         </transition>
       </router-view>
     </main>
@@ -15,45 +13,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUpdated, watchEffect } from 'vue';
+import { ref, onMounted } from 'vue';
 import TheHeader from './components/TheHeader.vue';
 
-// 获取头部元素引用
-const headerRef = ref(null);
-// 存储头部高度
+// 动态计算头部高度，避免内容被固定导航遮挡
 const headerHeight = ref(0);
 
-// 计算头部高度的函数
-const calculateHeaderHeight = () => {
-  if (headerRef.value) {
-    headerHeight.value = headerRef.value.offsetHeight;
+onMounted(() => {
+  const header = document.querySelector('.header');
+  if (header) {
+    headerHeight.value = header.offsetHeight;
   }
-};
 
-// 初始化时计算
-onMounted(calculateHeaderHeight);
-// 组件更新时重新计算（如头部内容变化）
-onUpdated(calculateHeaderHeight);
-// 窗口大小变化时重新计算
-watchEffect(() => {
-  window.addEventListener('resize', calculateHeaderHeight);
-  // 组件卸载时移除事件监听
-  return () => {
-    window.removeEventListener('resize', calculateHeaderHeight);
-  };
+  // 窗口大小变化时重新计算
+  window.addEventListener('resize', () => {
+    if (header) {
+      headerHeight.value = header.offsetHeight;
+    }
+  });
 });
 </script>
 
-<style scoped>
-/* 全局基础样式 */
-html, body {
+<style>
+/* 全局样式 */
+* {
   margin: 0;
   padding: 0;
-  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
   background-color: #0d0d0d;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  overflow-x: hidden; /* 防止横向滚动条 */
 }
 
 /* 页面过渡动画 */
@@ -65,10 +58,5 @@ html, body {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-/* 移除固定padding-top，改为通过JS动态计算 */
-.app-main-content {
-  /* padding-top: 80px; 已移除，改为动态绑定 */
 }
 </style>
