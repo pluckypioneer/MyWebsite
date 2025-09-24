@@ -14,7 +14,33 @@
         
         <!-- 个人简介 -->
         <div class="personal-bio">
-          <div>
+          <div>// 示例：限制最大星星数
+const maxStars = 800;<link rel="preload" as="image" href="@/assets/image/avatar.png">
+<link rel="preload" as="image" href="@/assets/image/island-night-moon-scenery-digital-art-8k-wallpaper-uhdpaper.com-289@0@j.jpg">import { debounce } from 'lodash';
+
+const calculateHeaderHeight = debounce(() => {
+  if (headerRef.value) {
+    headerHeight.value = headerRef.value.offsetHeight;
+  }
+}, 100);import gzipPlugin from 'vite-plugin-gzip';
+
+export default defineConfig({
+  plugins: [vue(), gzipPlugin()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'vue-router', 'gsap']
+        }
+      }
+    }
+  }
+});<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js">
+<link rel="prefetch" href="/src/main.js"><transition name="fade">
+  <component :is="Component" v-if="Component" />
+  <div v-else class="loading">Loading...</div>
+</transition>
             <h3>Connect me 联系方式</h3>
             <p>🏠︎Address: Foshan City, Guangdong Provience, China</p>
             <p>📧 Email: zhengyuhang2005@gmail.com</p>
