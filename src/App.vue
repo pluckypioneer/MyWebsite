@@ -11,6 +11,7 @@
         </transition>
       </router-view>
     </main>
+    
   </div>
 </template>
 
@@ -68,7 +69,4 @@ html, body {
 }
 
 /* 移除固定padding-top，改为通过JS动态计算 */
-.app-main-content {
-  /* padding-top: 80px; 已移除，改为动态绑定 */
-}
 </style>

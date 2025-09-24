@@ -11,22 +11,25 @@
         <p class="subtitle">
           <span class="text-animate-char" v-for="(char, index) in tagline" :key="index">{{ char }}</span>
         </p>
-        
+
         <!-- 个人简介 -->
         <div class="personal-bio">
           <h3>Connect me 联系方式</h3>
           <p>🏠︎Address: Foshan City, Guangdong Provience, China</p>
           <p>📧 Email: zhengyuhang2005@gmail.com</p>
           <p>👔linkedln: <a href="https://www.linkedin.com/in/john-zheng-b7a83028a/" target="_blank">John Zheng</a></p>
-          <p>🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 ★ <a href="https://www.instagram.com/john_zheng2005/" target="_blank" >@john.zheng.2005</a></p>
-          
+          <p>🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 ★ <a href="https://www.instagram.com/john_zheng2005/"
+              target="_blank">@john.zheng.2005</a></p>
+
           <h3>About me 关于我</h3>
-          <p>Hello! I'm Yuhang(John) Zheng , a Biomedical Engineering student with a passion for technology and innovation.</p>
-          <p>I enjoy exploring the intersection of biology, medicine, and engineering to develop solutions that improve healthcare.</p>
+          <p>Hello! I'm Yuhang(John) Zheng , a Biomedical Engineering student with a passion for technology and
+            innovation.</p>
+          <p>I enjoy exploring the intersection of biology, medicine, and engineering to develop solutions that improve
+            healthcare.</p>
           <p>At the same time, I am also striving to become an amateur full-stack software engineer.</p>
         </div>
       </div>
-      
+
       <!-- 右侧：项目经历和教育经历 -->
       <div class="right-section">
         <div class="experience-card">
@@ -35,7 +38,7 @@
             <div class="education-item">
               <span class="education-period">2023.9-2027.6</span>
               <span class="education-institution">南方医科大学</span>
-              <span class="education-major">生物医学工程专业</span>
+              <span class="education-major">生物医学工程专业（智能医学仪器方向）</span>
             </div>
           </a>
         </div>
@@ -46,7 +49,7 @@
             <p>项目经历信息正在整理中...</p>
           </div>
         </div>
-        
+
         <div class="experience-card">
           <h2>工作经历</h2>
           <div v-if="projects.length === 0" class="no-content">
@@ -55,7 +58,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- GitHub贡献板块 - 替换为真实GitHub贡献图 -->
     <div class="github-section">
       <h2>GitHub 贡献</h2>
@@ -70,6 +73,14 @@
         </div>
       </div>
     </div>
+
+    <!-- ICP备案 -->
+    <div class="hero-icp">
+      <a href="https://icp.gov.moe/?keyword=20250968" target="_blank" rel="noopener noreferrer">
+        萌ICP备20250968号
+      </a>
+    </div>
+
   </section>
 </template>
 
@@ -78,7 +89,7 @@ import { onMounted, ref, nextTick } from 'vue';
 import gsap from 'gsap';
 
 // 更新名字和职业
-const name = ref("YUHANG (JOHN) ZHENG");
+const name = ref("Yuhang(John) Zheng");
 const tagline = ref("BIOMEDICAL ENGINEER");
 const projects = ref([]); // 项目经历数据
 const workExperiences = ref([]); // 工作经历数据
@@ -154,6 +165,7 @@ onMounted(() => {
   color: #fff;
   padding: 100px 0;
   overflow: hidden; 
+  position: relative;
 }
 
 .particles-bg {
@@ -375,6 +387,31 @@ onMounted(() => {
   box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
 }
 
+
+  .hero-icp {
+  position: absolute; /* 基于 .hero-section 定位 */
+  bottom: 20px; /* 距离组件底部的间距（大屏幕） */
+  left: 50%; 
+  transform: translateX(-50%); /* 水平居中（核心） */
+  color: #14f1b6; /* 自定义字体颜色（你设置的浅绿色，可修改） */
+  font-size: 0.9rem; 
+  z-index: 2; /* 确保在粒子效果、背景之上，不被遮挡 */
+}
+
+/* 备案链接样式：继承父元素颜色，去掉默认下划线 */
+.hero-icp a {
+  color: inherit; /* 和文字颜色一致（#14f1b6） */
+  text-decoration: none; /* 去掉默认链接下划线 */
+  transition: color 0.3s ease; /* 颜色过渡动画 */
+}
+
+/* 鼠标 hover 链接时的样式（增强交互） */
+.hero-icp a:hover {
+  color: #fff; /* hover 时变白色，更醒目 */
+  text-decoration: underline; /*  hover 显示下划线，提示可点击 */
+}
+
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .content-wrapper {
@@ -395,6 +432,8 @@ onMounted(() => {
     width: 180px;
     height: 180px;
   }
+
+
 }
 
 @media (max-width: 480px) {
