@@ -33,7 +33,8 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* 改为min-height */
+  padding-top: env(safe-area-inset-top, 0); /* 适配刘海屏等设备 */
   background-color: #0d0d0d;
   color: #fff;
 }

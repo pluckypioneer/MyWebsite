@@ -96,15 +96,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, nextTick } from 'vue'; // 添加nextTick导入
 import gsap from 'gsap';
+import { generateMockContributionData, getCellTitle } from '@/mock/contributions.js';
 
 // 更新名字和职业
 const name = ref("YUHANG (JOHN) ZHENG");
 const tagline = ref("BIOMEDICAL ENGINEER");
 const projects = ref([]); // 项目经历数据
+const workExperiences = ref([]); // 工作经历数据
 const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
-const cells = ref(Array(365).fill(0)); // 365天，初始贡献等级为0
+const cells = ref([]); // 初始为空数组，将在mounted中初始化
 const calendarGrid = ref(null);
 
 // 计算年份范围
@@ -114,142 +116,82 @@ const yearRange = computed(() => {
   return `${lastYear.getFullYear()} - ${today.getFullYear()}`;
 });
 
-// 生成模拟的GitHub贡献数据
-const generateMockContributionData = () => {
-  // 模拟数据 - 在实际应用中，这里可以替换为从GitHub API获取的真实数据
-  const today = new Date();
-  const lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-  
-  // 为每一天生成随机的贡献等级（0-4）
-  for (let i = 0; i < cells.value.length; i++) {
-    const date = new Date(lastYear);
-    date.setDate(date.getDate() + i);
-    
-    // 周末贡献较少
-    const dayOfWeek = date.getDay();
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-    
-    // 随机生成贡献等级，周末概率较低
-    let level = 0;
-    const rand = Math.random();
-    
-    if (isWeekend) {
-      if (rand < 0.7) level = 0;
-      else if (rand < 0.85) level = 1;
-      else if (rand < 0.95) level = 2;
-      else if (rand < 0.99) level = 3;
-      else level = 4;
-    } else {
-      if (rand < 0.4) level = 0;
-      else if (rand < 0.7) level = 1;
-      else if (rand < 0.85) level = 2;
-      else if (rand < 0.95) level = 3;
-      else level = 4;
-    }
-    
-    cells.value[i] = level;
-  }
-};
-
-// 获取单元格的提示文本
-const getCellTitle = (index) => {
-  const today = new Date();
-  const lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-  const cellDate = new Date(lastYear);
-  cellDate.setDate(cellDate.getDate() + index);
-  
-  const level = cells.value[index];
-  let contributions = 0;
-  
-  // 根据等级设置贡献数量
-  switch(level) {
-    case 0: contributions = 0; break;
-    case 1: contributions = Math.floor(Math.random() * 5) + 1; break;
-    case 2: contributions = Math.floor(Math.random() * 10) + 5; break;
-    case 3: contributions = Math.floor(Math.random() * 20) + 15; break;
-    case 4: contributions = Math.floor(Math.random() * 50) + 30; break;
-  }
-  
-  const dateStr = cellDate.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  
-  return `${dateStr}: ${contributions} 次贡献`;
-};
+// 删除这里的重复函数定义，使用从mock模块导入的函数
 
 onMounted(() => {
   // 粒子效果（使用 CSS 或外部库）
   // 这里的 .particles-bg 只是占位符，您可以使用 Particles.js 或自行实现
   
   // 生成GitHub贡献数据
-  generateMockContributionData();
+  cells.value = generateMockContributionData();
 
   // GSAP 动画：文字打字机效果
-  gsap.fromTo('.text-animate-char', 
-    { opacity: 0, y: 5 }, 
-    { 
-      opacity: 1, 
-      y: 0, 
-      stagger: 0.05, // 每个字符延迟 0.05 秒出现
-      ease: "power2.out",
-      delay: 0.5
-    }
-  );
-
-  // GSAP 动画：头像淡入效果
-  gsap.fromTo('.avatar', 
-    { opacity: 0, scale: 0.8 }, 
-    { 
-      opacity: 1, 
-      scale: 1,
-      ease: "back.out(1.7)",
-      delay: 1 
-    }
-  );
-  
-  // 左侧内容动画
-  gsap.fromTo('.left-section',
-    { opacity: 0, x: -50 },
-    { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', delay: 1.2 }
-  );
-  
-  // 右侧内容动画
-  gsap.fromTo('.right-section',
-    { opacity: 0, x: 50 },
-    { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', delay: 1.5 }
-  );
-  
-  // GitHub板块动画
-  gsap.fromTo('.github-section',
-    { opacity: 0, y: 50 },
-    { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.8 }
-  );
-  
-  // GitHub贡献日历动画
-  if (calendarGrid.value) {
-    gsap.fromTo(
-      '.contribution-cell',
-      { opacity: 0, scale: 0.8 },
-      {
-        opacity: 1,
-        scale: 1,
-        stagger: 0.005,
-        duration: 0.3,
-        ease: 'power2.out',
-        delay: 2
+  // 使用nextTick确保DOM已渲染
+  nextTick(() => {
+    gsap.fromTo('.text-animate-char', 
+      { opacity: 0, y: 5 }, 
+      { 
+        opacity: 1, 
+        y: 0, 
+        stagger: 0.05, // 每个字符延迟 0.05 秒出现
+        ease: "power2.out",
+        delay: 0.5
       }
     );
-  }
+
+    // GSAP 动画：头像淡入效果
+    gsap.fromTo('.avatar', 
+      { opacity: 0, scale: 0.8 }, 
+      { 
+        opacity: 1, 
+        scale: 1,
+        ease: "back.out(1.7)",
+        delay: 1 
+      }
+    );
+    
+    // 左侧内容动画
+    gsap.fromTo('.left-section',
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', delay: 1.2 }
+    );
+    
+    // 右侧内容动画
+    gsap.fromTo('.right-section',
+      { opacity: 0, x: 50 },
+      { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out', delay: 1.5 }
+    );
+    
+    // GitHub板块动画
+    gsap.fromTo('.github-section',
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.8 }
+    );
+    
+    // GitHub贡献日历动画
+    if (calendarGrid.value) {
+      gsap.fromTo(
+        '.contribution-cell',
+        { opacity: 0, scale: 0.8 },
+        {
+          opacity: 1,
+          scale: 1,
+          stagger: 0.005,
+          duration: 0.3,
+          ease: 'power2.out',
+          delay: 2
+        }
+      );
+    }
+  });
 });
 </script>
 
 <style scoped>
 .hero-section {
   min-height: 100vh;
-  background-image: url('src/assets/image/island-night-moon-scenery-digital-art-8k-wallpaper-uhdpaper.com-289@0@j.jpg'); 
-  background-size: cover ;/* 替换为您的背景图片路径 */
+  background-image: url('@/assets/image/island-night-moon-scenery-digital-art-8k-wallpaper-uhdpaper.com-289@0@j.jpg'); 
+  background-size: cover;
   background-color: #0d0d0d; /* 深色背景 */
   color: #fff;
   padding: 100px 0;
@@ -480,6 +422,7 @@ onMounted(() => {
   grid-template-columns: repeat(53, 1fr);
   gap: 2px;
   grid-auto-rows: 12px;
+  overflow-x: auto;
 }
 
 .contribution-cell {
@@ -550,7 +493,8 @@ onMounted(() => {
   
   /* 响应式日历 */
   .calendar-grid {
-    grid-template-columns: repeat(52, 1fr);
+    grid-template-columns: repeat(30, 1fr); /* 减少列数以便在小屏幕上显示 */
+    overflow-x: auto;
   }
   
   .contribution-cell {
