@@ -16,10 +16,11 @@
         <div class="personal-bio">
           <h3>Connect me 联系方式</h3>
           <p>🏠︎Address: Foshan City, Guangdong Provience, China</p>
-          <p>📧 Email: zhengyuhang2005@gmail.com</p>
+          <p>📧 Email: <a href="mailto:zhengyuhang2005@gmail.com?subject=来自个人网站的联系&body=您好，我想咨询关于..." 
+                                      class="email-link">zhengyuhang2005@gmail.com</a></p>
           <p>👔linkedln: <a href="https://www.linkedin.com/in/john-zheng-b7a83028a/" target="_blank">John Zheng</a></p>
           <p>🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 ★ <a href="https://www.instagram.com/john_zheng2005/"
-              target="_blank">@john.zheng.2005</a></p>
+              target="_blank">@john_zheng2005</a></p>
 
           <h3>About me 关于我</h3>
           <p>Hello! I'm Yuhang(John) Zheng , a Biomedical Engineering student with a passion for technology and
@@ -245,6 +246,22 @@ onMounted(() => {
   line-height: 1.6;
   margin-bottom: 10px;
   color: #ddd;
+}
+
+/* 统一 .personal-bio 下所有社交链接的字体（LinkedIn、Ins、邮箱） */
+.personal-bio a {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #00f0ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* 统一链接 hover 效果（增强交互感） */
+.personal-bio a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.8);
 }
 
 /* 右侧区域样式 */
