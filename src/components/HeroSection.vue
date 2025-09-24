@@ -253,7 +253,7 @@ onMounted(() => {
   background-color: #0d0d0d; /* 深色背景 */
   color: #fff;
   padding: 100px 0;
-  overflow: auto; 
+  overflow: hidden; 
 }
 
 .particles-bg {
