@@ -14,39 +14,12 @@
         
         <!-- 个人简介 -->
         <div class="personal-bio">
-          <div>// 示例：限制最大星星数
-const maxStars = 800;<link rel="preload" as="image" href="@/assets/image/avatar.png">
-<link rel="preload" as="image" href="@/assets/image/island-night-moon-scenery-digital-art-8k-wallpaper-uhdpaper.com-289@0@j.jpg">import { debounce } from 'lodash';
-
-const calculateHeaderHeight = debounce(() => {
-  if (headerRef.value) {
-    headerHeight.value = headerRef.value.offsetHeight;
-  }
-}, 100);import gzipPlugin from 'vite-plugin-gzip';
-
-export default defineConfig({
-  plugins: [vue(), gzipPlugin()],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['vue', 'vue-router', 'gsap']
-        }
-      }
-    }
-  }
-});<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js">
-<link rel="prefetch" href="/src/main.js"><transition name="fade">
-  <component :is="Component" v-if="Component" />
-  <div v-else class="loading">Loading...</div>
-</transition>
-            <h3>Connect me 联系方式</h3>
-            <p>🏠︎Address: Foshan City, Guangdong Provience, China</p>
-            <p>📧 Email: zhengyuhang2005@gmail.com</p>
-            <p>👔linkedln: <a href="https://www.linkedin.com/in/john-zheng-b7a83028a/" target="_blank">John Zheng</a></p>
-            <p>🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 ★ <a href="https://www.instagram.com/john_zheng2005/" target="_blank" >@john.zheng.2005</a></p>
-          </div>
+          <h3>Connect me 联系方式</h3>
+          <p>🏠︎Address: Foshan City, Guangdong Provience, China</p>
+          <p>📧 Email: zhengyuhang2005@gmail.com</p>
+          <p>👔linkedln: <a href="https://www.linkedin.com/in/john-zheng-b7a83028a/" target="_blank">John Zheng</a></p>
+          <p>🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦 ★ <a href="https://www.instagram.com/john_zheng2005/" target="_blank" >@john.zheng.2005</a></p>
+          
           <h3>About me 关于我</h3>
           <p>Hello! I'm Yuhang(John) Zheng , a Biomedical Engineering student with a passion for technology and innovation.</p>
           <p>I enjoy exploring the intersection of biology, medicine, and engineering to develop solutions that improve healthcare.</p>
@@ -54,10 +27,9 @@ export default defineConfig({
         </div>
       </div>
       
-      <!-- 右侧：项目经历和教育经历。。。 -->
+      <!-- 右侧：项目经历和教育经历 -->
       <div class="right-section">
-
-                <div class="experience-card">
+        <div class="experience-card">
           <h2>教育经历</h2>
           <a href="https://portal.smu.edu.cn/swyxgcxy/" target="_blank" class="education-link">
             <div class="education-item">
@@ -81,35 +53,15 @@ export default defineConfig({
             <p>工作经历信息正在整理中...</p>
           </div>
         </div>
-
       </div>
     </div>
     
-    <!-- GitHub贡献板块 - 已替换为GitHub贡献日历 -->
+    <!-- GitHub贡献板块 - 替换为真实GitHub贡献图 -->
     <div class="github-section">
       <h2>GitHub 贡献</h2>
       <div class="github-calendar">
-        <div class="calendar-header">
-          <div class="contribution-legend">
-            <span class="legend-label">贡献等级：</span>
-            <span class="legend-item" v-for="level in [0, 1, 2, 3, 4]" :key="level">
-              <div class="contribution-cell" :class="`contribution-${level}`"></div>
-            </span>
-          </div>
-        </div>
-        <div class="calendar-container">
-          <div class="calendar-weekdays">
-            <span v-for="day in weekdays" :key="day" class="weekday">{{ day }}</span>
-          </div>
-          <div class="calendar-grid" ref="calendarGrid">
-            <div 
-              v-for="(cell, index) in cells" 
-              :key="index" 
-              class="contribution-cell"
-              :class="`contribution-${cell}`"
-              :title="getCellTitle(index)"
-            ></div>
-          </div>
+        <div class="github-chart-container">
+          <img src="https://ghchart.rshah.org/pluckypioneer" alt="pluckypioneer's Github chart" />
         </div>
         <div class="calendar-footer">
           <a href="https://github.com/pluckypioneer" target="_blank" class="github-link">
@@ -122,35 +74,19 @@ export default defineConfig({
 </template>
 
 <script setup>
-import { onMounted, ref, computed, nextTick } from 'vue'; // 添加nextTick导入
+import { onMounted, ref, nextTick } from 'vue';
 import gsap from 'gsap';
-import { generateMockContributionData, getCellTitle } from '@/mock/contributions.js';
 
 // 更新名字和职业
 const name = ref("YUHANG (JOHN) ZHENG");
 const tagline = ref("BIOMEDICAL ENGINEER");
 const projects = ref([]); // 项目经历数据
 const workExperiences = ref([]); // 工作经历数据
-const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
-const cells = ref([]); // 初始为空数组，将在mounted中初始化
-const calendarGrid = ref(null);
-
-// 计算年份范围
-const yearRange = computed(() => {
-  const today = new Date();
-  const lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-  return `${lastYear.getFullYear()} - ${today.getFullYear()}`;
-});
-
-// 删除这里的重复函数定义，使用从mock模块导入的函数
 
 onMounted(() => {
   // 粒子效果（使用 CSS 或外部库）
   // 这里的 .particles-bg 只是占位符，您可以使用 Particles.js 或自行实现
   
-  // 生成GitHub贡献数据
-  cells.value = generateMockContributionData();
-
   // GSAP 动画：文字打字机效果
   // 使用nextTick确保DOM已渲染
   nextTick(() => {
@@ -194,21 +130,17 @@ onMounted(() => {
       { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.8 }
     );
     
-    // GitHub贡献日历动画
-    if (calendarGrid.value) {
-      gsap.fromTo(
-        '.contribution-cell',
-        { opacity: 0, scale: 0.8 },
-        {
-          opacity: 1,
-          scale: 1,
-          stagger: 0.005,
-          duration: 0.3,
-          ease: 'power2.out',
-          delay: 2
-        }
-      );
-    }
+    // GitHub贡献图动画
+    gsap.fromTo('.github-chart-container img',
+      { opacity: 0, scale: 0.9 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: 'power2.out',
+        delay: 2
+      }
+    );
   });
 });
 </script>
@@ -375,7 +307,7 @@ onMounted(() => {
   font-size: 1em;
 }
 
-/* GitHub贡献日历样式 */
+/* GitHub贡献图样式 */
 .github-section {
   position: relative;
   z-index: 1;
@@ -402,75 +334,22 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-.calendar-header {
-  display: flex;
-  justify-content: center;
+.github-chart-container {
   margin-bottom: 20px;
-}
-
-.contribution-legend {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.legend-label {
-  color: #ddd;
-  font-size: 0.9em;
-  white-space: nowrap;
-}
-
-.legend-item {
-  display: inline-block;
-}
-
-.calendar-container {
-  width: 100%;
-}
-
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  margin-bottom: 8px;
-}
-
-.weekday {
-  text-align: center;
-  font-size: 0.8em;
-  color: #888;
-  font-family: 'Courier New', monospace;
-  padding: 4px;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(53, 1fr);
-  gap: 2px;
-  grid-auto-rows: 12px;
   overflow-x: auto;
 }
 
-.contribution-cell {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-  background-color: rgba(0, 240, 255, 0.1);
+.github-chart-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
-.contribution-cell:hover {
-  transform: scale(1.5);
-  z-index: 10;
+.github-chart-container img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);
 }
-
-/* 贡献等级颜色 - 使用网站的霓虹蓝色调 */
-.contribution-0 { background-color: rgba(0, 240, 255, 0.1); }
-.contribution-1 { background-color: rgba(0, 240, 255, 0.3); }
-.contribution-2 { background-color: rgba(0, 240, 255, 0.5); }
-.contribution-3 { background-color: rgba(0, 240, 255, 0.7); }
-.contribution-4 { background-color: rgba(0, 240, 255, 0.9); }
 
 .calendar-footer {
   margin-top: 20px;
@@ -516,31 +395,11 @@ onMounted(() => {
     width: 180px;
     height: 180px;
   }
-  
-  /* 响应式日历 */
-  .calendar-grid {
-    grid-template-columns: repeat(30, 1fr); /* 减少列数以便在小屏幕上显示 */
-    overflow-x: auto;
-  }
-  
-  .contribution-cell {
-    width: 10px;
-    height: 10px;
-  }
 }
 
 @media (max-width: 480px) {
   .github-calendar {
     padding: 15px;
-  }
-  
-  .calendar-grid {
-    grid-template-columns: repeat(51, 1fr);
-  }
-  
-  .contribution-cell {
-    width: 8px;
-    height: 8px;
   }
 }
 </style>
