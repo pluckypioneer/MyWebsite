@@ -1,31 +1,20 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import md from 'vite-plugin-md'; // 新增：导入 Markdown 插件
-import path from 'path';
+import path from 'path'; // 导入Node.js的path模块，用于处理文件路径
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        vue({
-            include: [/\.vue$/, /\.md$/], // 新增：允许 Vue 处理 .md 文件
-        }),
-        md({
-            // 配置 Markdown 插件：将 .md 文件转换为 Vue 组件
-            markdownItOptions: {
-                html: true, // 支持 HTML 标签
-                linkify: true, // 自动识别链接
-                typographer: true // 自动替换特殊符号（如引号）
-            }
-        })
-    ],
+    plugins: [vue()],
+    // 路径解析配置
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './src')
+            '@': path.resolve(__dirname, './src') // 设置@为src目录的别名，方便组件导入
         }
     },
+    // 开发服务器配置
     server: {
-        port: 3000,
-        open: true,
-        host: '0.0.0.0'
+        port: 3000, // 固定开发环境端口号，避免每次启动随机生成
+        open: true, // 启动开发服务器时自动打开浏览器
+        host: '0.0.0.0' // 允许外部访问（如同一局域网内的设备）
     }
 });
