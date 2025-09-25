@@ -35,7 +35,7 @@
       <!-- 右侧：项目经历和教育经历 -->
       <div class="right-section">
         <div class="experience-card">
-          <h2>教育经历</h2>
+          <h2>Education 教育经历</h2>
           <a href="https://portal.smu.edu.cn/swyxgcxy/" target="_blank" class="education-link">
             <div class="education-item">
               <span class="education-period">2023.9-2027.6</span>
@@ -46,14 +46,14 @@
         </div>
 
         <div class="experience-card">
-          <h2>项目经历</h2>
+          <h2>Projects 项目经历</h2>
           <div v-if="projects.length === 0" class="no-content">
             <p>项目经历信息正在整理中...</p>
           </div>
         </div>
 
         <div class="experience-card">
-          <h2>工作经历</h2>
+          <h2>Work Experience 工作经历</h2>
           <div v-if="projects.length === 0" class="no-content">
             <p>工作经历信息正在整理中...</p>
           </div>
