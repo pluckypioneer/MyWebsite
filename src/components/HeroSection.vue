@@ -15,7 +15,8 @@
         <!-- 个人简介 -->
         <div class="personal-bio">
           <h3>Connect me 联系方式</h3>
-          <p>🏠︎Address: Foshan City, Guangdong Provience, China</p>
+          <p>🏠︎Address: <a href="https://www.google.com/maps/search/?api=1&query=Foshan City, Guangdong Provience, China" 
+                                        target="_blank" class="location-link">Foshan City, Guangdong Provience, China</a></p>
           <p>📧 Email: <a href="mailto:zhengyuhang2005@gmail.com?subject=来自个人网站的联系&body=您好，我想咨询关于..." 
                                       class="email-link">zhengyuhang2005@gmail.com</a></p>
           <p>👔linkedln: <a href="https://www.linkedin.com/in/john-zheng-b7a83028a/" target="_blank">John Zheng</a></p>
@@ -183,7 +184,7 @@ onMounted(() => {
   z-index: 1;
   display: flex;
   justify-content: space-between;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
   gap: 60px;
@@ -198,6 +199,19 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.location-link {
+  font-family: 'Courier New', monospace;
+  color: #00f0ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.location-link:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.8);
 }
 
 .avatar {
@@ -228,10 +242,10 @@ onMounted(() => {
 
 .personal-bio {
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 25px;
+  padding: 20px;
   border-radius: 8px;
   border-left: 3px solid #00f0ff;
-  max-width: 400px;
+  max-width: 600px;
   margin-top: 20px;
 }
 
@@ -243,7 +257,7 @@ onMounted(() => {
 }
 
 .personal-bio p {
-  line-height: 1.6;
+  line-height: 1.0;
   margin-bottom: 10px;
   color: #ddd;
 }
@@ -451,11 +465,22 @@ onMounted(() => {
   }
 
 
+
+
 }
 
 @media (max-width: 480px) {
   .github-calendar {
     padding: 15px;
+  }
+
+  .github-link {
+    padding: 8px 12px; 
+    font-size: 1em; 
+    max-width: 90%; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
   }
 }
 </style>
